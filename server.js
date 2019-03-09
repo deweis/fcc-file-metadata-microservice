@@ -20,9 +20,15 @@ app.get('/hello', function(req, res) {
   res.json({ greetings: 'Hello, API' });
 });
 
+// When I submit something, I will receive the file name, and size in bytes within the JSON response.
 app.post('/api/fileanalyse', upload.single('upfile'), function(req, res, next) {
-  console.log('Size: ', req.file.size);
-  res.send('Thank you for uploading');
+  console.log('----------------------- POST REQUEST -----------------------');
+  console.log('Request: POST new file upload: ', req.file);
+  res.json({
+    name: req.file.originalname,
+    type: req.file.mimetype,
+    size: req.file.size
+  });
 });
 
 app.listen(process.env.PORT || 3000, function() {
